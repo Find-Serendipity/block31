@@ -11,8 +11,8 @@ app.get("/api/v1/pets", (req, res) => {
 });
 
 // GET - pet by owner name - '/api/v1/pets/owner'
-app.get("/api/v1/pets-query", (req, res) => {
-  const owner = req.query.owner;
+app.get("/api/v1/pets/owner", (req, res) => {
+  const owner = req.params.owner;
   res.send(`Your person, ${owner}, is pretty cool too!`);
 });
 
