@@ -1,25 +1,30 @@
+const pets = require("./database");
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Howdy");
+app.get("/", (_, res) => {
+  res.send(
+    "Welcome to my Pet API. Please feel free to GET as many pets as you'd like!"
+  );
 });
 
 // GET - all pets - '/api/v1/pets'
-app.get("/api/v1/pets", (req, res) => {
-  res.send("Hello World!");
+app.get("/api/v1/pets", (_, res) => {
+  res.send(pets);
 });
 
-// GET - pet by owner name - '/api/v1/pets/owner'
-app.get("/api/v1/pets/owner", (req, res) => {
-  const owner = req.params.owner;
-  res.send(`Your person, ${owner}, is pretty cool too!`);
+// GET - pet by owners name - '/api/v1/pets/owner'
+app.get("/api/v1/pets-query", (req, res) => {
+  const petOwner = req.query.owner;
+  const ownersPets = pets.filter((pet) => pet.owner === petOwner);
+  res.send(ownersPets);
 });
 
 // GET - pet by id - '/api/v1/pets/:name'
 app.get("/api/v1/pets/:name", (req, res) => {
   const name = req.params.name;
-  res.send(`Who's a good pet? You! ${name} is the bestest pet ever!`);
+  const singlePet = pets.find((pet) => pet.name === name);
+  res.send(singlePet);
 });
 
 app.listen(8080, () => {
